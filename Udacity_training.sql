@@ -116,6 +116,13 @@ WHERE (name LIKE 'C%' OR name LIKE 'W%')
               AND primary_poc NOT LIKE '%eana%');
 
 -- Subqueries
+SELECT channel, AVG(events) AS average_events
+FROM (SELECT DATE_TRUNC('day',occurred_at) AS day,
+                channel, COUNT(*) as events
+         FROM web_events 
+         GROUP BY day,channel) AS sub
+GROUP BY channel
+ORDER BY average_events DESC;
 
 
 
